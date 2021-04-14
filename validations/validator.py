@@ -4,6 +4,7 @@ from inspect import cleandoc
 from validations.colors import Color
 from features.convert import Convert
 from features.resize import Resize
+from features.filter import Filter
 
 
 def classInfo():
@@ -23,6 +24,8 @@ class Validate:
             self.f_extension = value['extension']
         if self.command == 'resize':
             self.f_pixels = value['pixels']
+        if self.command == 'filter':
+            self.f_blur = value['blur']
         self.bulk = value['bulk']
 
     def check_path(self):
@@ -48,6 +51,8 @@ class Validate:
             return Convert(files, self.f_output, self.f_extension).convert_processor()
         elif self.command == 'resize':
             return Resize(files, self.f_output, self.f_pixels).resize_processor()
+        elif self.command == 'filter':
+            return Filter(files, self.f_output, self.f_blur).filter_processor()
         else:
             return False
 

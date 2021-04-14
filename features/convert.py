@@ -10,7 +10,6 @@ class Convert:
         self.f_output = f_output
         self.f_extension = f_extension
 
-    # fix this code
     def process_convert(self, file):
         img = Image.open(file)
         new_filename = str(file.name).replace(

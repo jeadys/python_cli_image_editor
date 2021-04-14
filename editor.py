@@ -30,14 +30,17 @@ def argument_parser():
 
     convert_parser = feature_subparsers.add_parser(
         'convert', parents=[parent_parser])  # Parent is defined to get access to the parent's commands within this subcommand.
-
     convert_parser.add_argument('-e', '--extension')
 
     resize_parser = feature_subparsers.add_parser(
-        'resize', parents=[parent_parser]
-    )
-
+        'resize', parents=[parent_parser])
     resize_parser.add_argument('-p', '--pixels', type=int)
+
+    filter_parser = feature_subparsers.add_parser(
+        'filter', parents=[parent_parser])
+    # This is to prevent multiple arguments being used for the filter subcommand.
+    filter_parser = filter_parser.add_mutually_exclusive_group()
+    filter_parser.add_argument('--blur', type=int, nargs='?', const=15)
 
     args = main_parser.parse_args()
     args_dict = vars(args)
