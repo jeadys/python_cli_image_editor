@@ -3,6 +3,8 @@ from pathlib import Path
 from inspect import cleandoc
 from validations.colors import Color
 from features.convert import Convert
+from features.resize import Resize
+from features.filter import Filter
 
 
 def classInfo():
@@ -20,6 +22,10 @@ class Validate:
         self.f_output = Path(value['output'])
         if self.command == 'convert':
             self.f_extension = value['extension']
+        if self.command == 'resize':
+            self.f_pixels = value['pixels']
+        if self.command == 'filter':
+            self.f_blur = value['blur']
         self.bulk = value['bulk']
 
     def check_path(self):
@@ -29,11 +35,26 @@ class Validate:
             print(cleandoc(f'''
             {Color.OKGREEN}valid input/output{Color.ENDC}
             '''))
-            return Convert(self.f_input, self.f_output, self.f_extension).convert_processor()
+            return self.check_extension()
         else:
             print(cleandoc(f'''
             {Color.WARNING}invalid input/output{Color.ENDC}
             '''))
+
+    def check_extension(self):
+        image_extensions = ['.jpg', '.jpeg', '.png']
+
+        files = [self.f_input] if not self.bulk else [file for file in Path(self.f_input).glob(
+            '*') if file.suffix in image_extensions]  # and self.f_extension != file.suffix
+
+        if self.command == 'convert':
+            return Convert(files, self.f_output, self.f_extension).convert_processor()
+        elif self.command == 'resize':
+            return Resize(files, self.f_output, self.f_pixels).resize_processor()
+        elif self.command == 'filter':
+            return Filter(files, self.f_output, self.f_blur).filter_processor()
+        else:
+            return False
 
 
 if __name__ == '__main__':
