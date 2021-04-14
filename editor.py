@@ -28,8 +28,15 @@ def argument_parser():
     feature_subparsers = main_parser.add_subparsers(
         help='sub-command help', title='actions', dest='command')  # Dest is defined to see which subcommand is being used.
 
+    # Some arguments within the subcommand have nargs, default & const defined.
+    # nargs is for 0 or 1 argument expected.
+    # default is used when argument isn't specified.
+    # const is used when argument is specified but no value given.
+
+    # Each subparser (subcommand) has parent defined to get access to the parent's commands within that subparser (subcommand).
+
     convert_parser = feature_subparsers.add_parser(
-        'convert', parents=[parent_parser])  # Parent is defined to get access to the parent's commands within this subcommand.
+        'convert', parents=[parent_parser])
     convert_parser.add_argument('-e', '--extension')
 
     resize_parser = feature_subparsers.add_parser(
@@ -40,7 +47,8 @@ def argument_parser():
         'filter', parents=[parent_parser])
     # This is to prevent multiple arguments being used for the filter subcommand.
     filter_parser = filter_parser.add_mutually_exclusive_group()
-    filter_parser.add_argument('--blur', type=int, nargs='?', const=15)
+    filter_parser.add_argument('--blur', type=int, nargs='?',
+                               default=15, const=15)
 
     args = main_parser.parse_args()
     args_dict = vars(args)
