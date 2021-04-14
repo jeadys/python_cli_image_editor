@@ -33,6 +33,12 @@ def argument_parser():
 
     convert_parser.add_argument('-e', '--extension')
 
+    resize_parser = feature_subparsers.add_parser(
+        'resize', parents=[parent_parser]
+    )
+
+    resize_parser.add_argument('-p', '--pixels', type=int)
+
     args = main_parser.parse_args()
     args_dict = vars(args)
 
