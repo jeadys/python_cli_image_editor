@@ -5,10 +5,11 @@ Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
 class Resize:
-    def __init__(self, files, f_output, f_pixels):
+    def __init__(self, files, f_output, f_pixels, optimize):
         self.files = files
         self.f_output = f_output
         self.f_pixels = f_pixels
+        self.optimize = optimize
 
     def process_resize(self, file):
         img = Image.open(file)
@@ -16,7 +17,8 @@ class Resize:
         final_output = self.f_output.joinpath(new_filename)
         dimensions = (self.f_pixels, self.f_pixels)
         img.thumbnail(dimensions, Image.ANTIALIAS)
-        img.save(final_output)
+        img.save(final_output, optimize=self.optimize,
+                 compress_level=9, quality=85)
 
     def resize_processor(self):
         with concurrent.futures.ProcessPoolExecutor() as executor:

@@ -27,6 +27,7 @@ class Validate:
         if self.command == 'filter':
             self.f_blur = value['blur']
         self.bulk = value['bulk']
+        self.optimize = value['optimize']
 
     def check_path(self):
         Path(self.f_output).mkdir(parents=True, exist_ok=True)
@@ -42,17 +43,19 @@ class Validate:
             '''))
 
     def check_extension(self):
-        image_extensions = ['.jpg', '.jpeg', '.png']
+        image_extensions = ['jpg', '.jpg', 'jpeg', '.jpeg', '.png', 'png']
 
         files = [self.f_input] if not self.bulk else [file for file in Path(self.f_input).glob(
             '*') if file.suffix in image_extensions]  # and self.f_extension != file.suffix
 
         if self.command == 'convert':
-            return Convert(files, self.f_output, self.f_extension).convert_processor()
+            # This is to prevent convertion from -> to same file extension (saves processing time).
+            files = [file for file in files if self.f_extension != file.suffix]
+            return Convert(files, self.f_output, self.f_extension, self.optimize).convert_processor()
         elif self.command == 'resize':
-            return Resize(files, self.f_output, self.f_pixels).resize_processor()
+            return Resize(files, self.f_output, self.f_pixels, self.optimize).resize_processor()
         elif self.command == 'filter':
-            return Filter(files, self.f_output, self.f_blur).filter_processor()
+            return Filter(files, self.f_output, self.f_blur, self.optimize).filter_processor()
         else:
             return False
 

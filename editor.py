@@ -6,7 +6,6 @@ import concurrent.futures
 from inspect import cleandoc
 from validations.colors import Color
 from validations.validator import Validate
-# from validations.validator import Validate
 from features.convert import Convert
 
 
@@ -22,6 +21,7 @@ def argument_parser():
     parent_parser.add_argument('-i', '--input')
     parent_parser.add_argument('-o', '--output')
     parent_parser.add_argument('-b', '--bulk', action='store_true')
+    parent_parser.add_argument('--optimize', action='store_true')
 
     main_parser = argparse.ArgumentParser()
 
