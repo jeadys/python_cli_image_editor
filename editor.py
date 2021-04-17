@@ -35,20 +35,31 @@ def argument_parser():
 
     # Each subparser (subcommand) has parent defined to get access to the parent's commands within that subparser (subcommand).
 
+    # add_mutually_exclusive_group is to prevent multiple arguments being used for a subcommand.
+
     convert_parser = feature_subparsers.add_parser(
         'convert', parents=[parent_parser])
     convert_parser.add_argument('-e', '--extension')
 
-    resize_parser = feature_subparsers.add_parser(
-        'resize', parents=[parent_parser])
-    resize_parser.add_argument('-p', '--pixels', type=int)
+    dimension_parser = feature_subparsers.add_parser(
+        'dimension', parents=[parent_parser])
+    dimension_parser = dimension_parser.add_mutually_exclusive_group()
+    dimension_parser.add_argument('--scale', type=int)
+    dimension_parser.add_argument('--rotate', type=int)
+    dimension_parser.add_argument(
+        '--flip', type=str, choices=['vertical', 'horizontal'])
 
     filter_parser = feature_subparsers.add_parser(
         'filter', parents=[parent_parser])
-    # This is to prevent multiple arguments being used for the filter subcommand.
     filter_parser = filter_parser.add_mutually_exclusive_group()
     filter_parser.add_argument('--blur', type=int, nargs='?',
-                               default=15, const=15)
+                               default=None, const=None)
+
+    hue_parser = feature_subparsers.add_parser(
+        'hue', parents=[parent_parser])
+    hue_parser = hue_parser.add_mutually_exclusive_group()
+    hue_parser.add_argument('--contrast', type=float)
+    hue_parser.add_argument('--monochrome', action='store_true')
 
     args = main_parser.parse_args()
     args_dict = vars(args)

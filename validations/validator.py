@@ -3,8 +3,9 @@ from pathlib import Path
 from inspect import cleandoc
 from validations.colors import Color
 from features.convert import Convert
-from features.resize import Resize
+from features.dimension import Dimension
 from features.filter import Filter
+from features.hue import Hue
 
 
 def classInfo():
@@ -22,10 +23,15 @@ class Validate:
         self.f_output = Path(value['output'])
         if self.command == 'convert':
             self.f_extension = value['extension']
-        if self.command == 'resize':
-            self.f_pixels = value['pixels']
+        if self.command == 'dimension':
+            self.f_scale = value['scale']
+            self.f_rotate = value['rotate']
+            self.f_flip = value['flip']
         if self.command == 'filter':
             self.f_blur = value['blur']
+        if self.command == 'hue':
+            self.f_contrast = value['contrast']
+            self.f_monochrome = value['monochrome']
         self.bulk = value['bulk']
         self.optimize = value['optimize']
 
@@ -52,10 +58,12 @@ class Validate:
             # This is to prevent convertion from -> to same file extension (saves processing time).
             files = [file for file in files if self.f_extension != file.suffix]
             return Convert(files, self.f_output, self.f_extension, self.optimize).convert_processor()
-        elif self.command == 'resize':
-            return Resize(files, self.f_output, self.f_pixels, self.optimize).resize_processor()
+        elif self.command == 'dimension':
+            return Dimension(files, self.f_output, self.f_scale, self.f_rotate, self.f_flip, self.optimize).dimension_processor()
         elif self.command == 'filter':
             return Filter(files, self.f_output, self.f_blur, self.optimize).filter_processor()
+        elif self.command == 'hue':
+            return Hue(files, self.f_output, self.f_contrast, self.f_monochrome, self.optimize).hue_processor()
         else:
             return False
 
