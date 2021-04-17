@@ -26,6 +26,7 @@ class Validate:
         if self.command == 'dimension':
             self.f_scale = value['scale']
             self.f_rotate = value['rotate']
+            self.f_flip = value['flip']
         if self.command == 'filter':
             self.f_blur = value['blur']
         if self.command == 'hue':
@@ -58,7 +59,7 @@ class Validate:
             files = [file for file in files if self.f_extension != file.suffix]
             return Convert(files, self.f_output, self.f_extension, self.optimize).convert_processor()
         elif self.command == 'dimension':
-            return Dimension(files, self.f_output, self.f_scale, self.f_rotate, self.optimize).dimension_processor()
+            return Dimension(files, self.f_output, self.f_scale, self.f_rotate, self.f_flip, self.optimize).dimension_processor()
         elif self.command == 'filter':
             return Filter(files, self.f_output, self.f_blur, self.optimize).filter_processor()
         elif self.command == 'hue':

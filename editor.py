@@ -46,6 +46,8 @@ def argument_parser():
     dimension_parser = dimension_parser.add_mutually_exclusive_group()
     dimension_parser.add_argument('--scale', type=int)
     dimension_parser.add_argument('--rotate', type=int)
+    dimension_parser.add_argument(
+        '--flip', type=str, choices=['vertical', 'horizontal'])
 
     filter_parser = feature_subparsers.add_parser(
         'filter', parents=[parent_parser])
