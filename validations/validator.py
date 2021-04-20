@@ -6,6 +6,7 @@ from features.convert import Convert
 from features.dimension import Dimension
 from features.filter import Filter
 from features.hue import Hue
+from features.watermark import Watermark
 
 
 def classInfo():
@@ -32,6 +33,9 @@ class Validate:
         if self.command == 'hue':
             self.f_contrast = value['contrast']
             self.f_monochrome = value['monochrome']
+        if self.command == 'watermark':
+            self.f_position = value['position']
+            self.f_size = value['size']
         self.bulk = value['bulk']
         self.optimize = value['optimize']
 
@@ -42,17 +46,17 @@ class Validate:
             print(cleandoc(f'''
             {Color.OKGREEN}valid input/output{Color.ENDC}
             '''))
-            return self.check_extension()
+            return self.retrieve_files()
         else:
             print(cleandoc(f'''
             {Color.WARNING}invalid input/output{Color.ENDC}
             '''))
 
-    def check_extension(self):
+    def retrieve_files(self):
         image_extensions = ['jpg', '.jpg', 'jpeg', '.jpeg', '.png', 'png']
 
         files = [self.f_input] if not self.bulk else [file for file in Path(self.f_input).glob(
-            '*') if file.suffix in image_extensions]  # and self.f_extension != file.suffix
+            '*') if file.suffix in image_extensions]
 
         if self.command == 'convert':
             # This is to prevent convertion from -> to same file extension (saves processing time).
@@ -64,8 +68,9 @@ class Validate:
             return Filter(files, self.f_output, self.f_blur, self.optimize).filter_processor()
         elif self.command == 'hue':
             return Hue(files, self.f_output, self.f_contrast, self.f_monochrome, self.optimize).hue_processor()
-        else:
-            return False
+        elif self.command == 'watermark':
+            return Watermark(files, self.f_output, self.f_position, self.f_size, self.optimize).watermark_processor()
+        return False
 
 
 if __name__ == '__main__':
