@@ -6,6 +6,7 @@ from features.convert import Convert
 from features.dimension import Dimension
 from features.filter import Filter
 from features.hue import Hue
+from features.watermark import Watermark
 
 
 def classInfo():
@@ -32,6 +33,9 @@ class Validate:
         if self.command == 'hue':
             self.f_contrast = value['contrast']
             self.f_monochrome = value['monochrome']
+        if self.command == 'watermark':
+            self.f_position = value['position']
+            self.f_size = value['size']
         self.bulk = value['bulk']
         self.optimize = value['optimize']
 
@@ -64,6 +68,8 @@ class Validate:
             return Filter(files, self.f_output, self.f_blur, self.optimize).filter_processor()
         elif self.command == 'hue':
             return Hue(files, self.f_output, self.f_contrast, self.f_monochrome, self.optimize).hue_processor()
+        elif self.command == 'watermark':
+            return Watermark(files, self.f_output, self.f_position, self.f_size, self.optimize).watermark_processor()
         return False
 
 

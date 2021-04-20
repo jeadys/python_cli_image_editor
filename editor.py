@@ -66,6 +66,14 @@ def argument_parser():
     hue_parser.add_argument('--contrast', type=float)
     hue_parser.add_argument('--monochrome', action='store_true')
 
+    # WATERMARK FEATURE
+    watermark_parser = feature_subparsers.add_parser(
+        'watermark', parents=[parent_parser])
+    watermark_parser.add_argument('--position', type=str, nargs='?', default='bottom_right',
+                                  const='bottom_right', choices=['top_left', 'top_right', 'bottom_left', 'bottom_right'])
+    watermark_parser.add_argument('--size', type=str, nargs='?', default='medium',
+                                  const='medium', choices=['small', 'medium', 'large'])
+
     args = main_parser.parse_args()
     args_dict = vars(args)
 
