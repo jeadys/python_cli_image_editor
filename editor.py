@@ -29,18 +29,21 @@ def argument_parser():
         help='sub-command help', title='actions', dest='command')  # Dest is defined to see which subcommand is being used.
 
     # Some arguments within the subcommand have nargs, default & const defined.
-    # nargs is for 0 or 1 argument expected.
-    # default is used when argument isn't specified.
-    # const is used when argument is specified but no value given.
+    # nargs is for 0 or 1 argument expected
+    # default is used when argument isn't specified
+    # const is used when argument is specified but no value given
 
     # Each subparser (subcommand) has parent defined to get access to the parent's commands within that subparser (subcommand).
 
     # add_mutually_exclusive_group is to prevent multiple arguments being used for a subcommand.
 
+    # CONVERT FEATURE
     convert_parser = feature_subparsers.add_parser(
         'convert', parents=[parent_parser])
-    convert_parser.add_argument('-e', '--extension')
+    convert_parser.add_argument(
+        '-e', '--extension', type=str, choices=['jpg', 'jpeg', 'png'])
 
+    # DIMENSION FEATURE
     dimension_parser = feature_subparsers.add_parser(
         'dimension', parents=[parent_parser])
     dimension_parser = dimension_parser.add_mutually_exclusive_group()
@@ -49,12 +52,14 @@ def argument_parser():
     dimension_parser.add_argument(
         '--flip', type=str, choices=['vertical', 'horizontal'])
 
+    # FILTER FEATURE
     filter_parser = feature_subparsers.add_parser(
         'filter', parents=[parent_parser])
     filter_parser = filter_parser.add_mutually_exclusive_group()
-    filter_parser.add_argument('--blur', type=int, nargs='?',
+    filter_parser.add_argument('--blur', type=float, nargs='?',
                                default=None, const=None)
 
+    # HUE FEATURE
     hue_parser = feature_subparsers.add_parser(
         'hue', parents=[parent_parser])
     hue_parser = hue_parser.add_mutually_exclusive_group()

@@ -9,8 +9,8 @@ class Hue:
         self.files = files
         self.f_output = f_output
         self.f_contrast = f_contrast
-        self.optimize = optimize
         self.f_monochrome = f_monochrome
+        self.optimize = optimize
 
     def process_hue(self, file):
         img = Image.open(file)
@@ -19,7 +19,7 @@ class Hue:
             new_filename = f'contrast_{str(file.name)}'
             enhancer = ImageEnhance.Contrast(img)
             final_edit = enhancer.enhance(self.f_contrast)
-        if self.f_monochrome:
+        elif self.f_monochrome:
             new_filename = f'monochrome_{str(file.name)}'
             final_edit = img.convert(mode='L')
 
