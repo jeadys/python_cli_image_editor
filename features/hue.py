@@ -1,6 +1,7 @@
-from PIL import Image, ImageEnhance
 from pathlib import Path
-import concurrent.futures
+from PIL import Image, ImageEnhance
+from concurrent.futures import ProcessPoolExecutor
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -28,5 +29,5 @@ class Hue:
                         compress_level=9, quality=85)
 
     def hue_processor(self):
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with ProcessPoolExecutor() as executor:
             executor.map(self.process_hue, self.files)

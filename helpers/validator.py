@@ -1,12 +1,14 @@
 from PIL import Image
 from pathlib import Path
 from inspect import cleandoc
-from validations.colors import Color
+
 from features.convert import Convert
 from features.dimension import Dimension
 from features.filter import Filter
 from features.hue import Hue
 from features.watermark import Watermark
+
+from helpers.colors import Color
 
 
 def classInfo():

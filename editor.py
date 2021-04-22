@@ -2,11 +2,12 @@ import sys
 import argparse
 from PIL import Image
 from pathlib import Path
-import concurrent.futures
 from inspect import cleandoc
-from validations.colors import Color
-from validations.validator import Validate
+
 from features.convert import Convert
+
+from helpers.colors import Color
+from helpers.validator import Validate
 
 
 def argument_parser():

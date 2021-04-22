@@ -1,6 +1,7 @@
 from PIL import Image
 from pathlib import Path
-import concurrent.futures
+from concurrent.futures import ProcessPoolExecutor
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -20,5 +21,5 @@ class Convert:
                  compress_level=9, quality=85)
 
     def convert_processor(self):
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with ProcessPoolExecutor() as executor:
             executor.map(self.process_convert, self.files)
