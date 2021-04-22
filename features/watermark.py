@@ -9,8 +9,10 @@ class Watermark:
         self.files = files
         self.f_output = f_output
         self.f_position = f_position
+        self.v_position, self.h_position = self.f_position.split('_')
         self.f_size = f_size
         self.optimize = optimize
+        self.resize = {'small': 8, 'medium': 5, 'large': 3, }
 
     def process_watermark(self, file):
         img = Image.open(file)
@@ -18,15 +20,9 @@ class Watermark:
 
         watermark = Image.open('assets/watermark.png')
 
-        sizes = {
-            'small': 8,
-            'medium': 5,
-            'large': 3,
-        }
-
         # To make the watermark fit nicely in the image we scale it down.
         resized_watermark = watermark.thumbnail(
-            (width_image / sizes[self.f_size], width_image / sizes[self.f_size]), Image.ANTIALIAS)
+            (width_image / self.resize[self.f_size], width_image / self.resize[self.f_size]), Image.ANTIALIAS)
 
         width_watermark, height_watermark = watermark.size
 
@@ -40,7 +36,7 @@ class Watermark:
             'bottom_right': (width_image - width_watermark - padding, height_image - height_watermark - padding),
         }
 
-        new_filename = f'watermarked_{str(file.name)}'
+        new_filename = f'watermarked_{self.v_position}_{self.h_position}_{str(file.name)}'
         final_output = self.f_output.joinpath(new_filename)
 
         img.paste(watermark, positions[self.f_position], watermark)

@@ -41,7 +41,7 @@ def argument_parser():
     convert_parser = feature_subparsers.add_parser(
         'convert', parents=[parent_parser])
     convert_parser.add_argument(
-        '-e', '--extension', type=str, choices=['jpg', 'jpeg', 'png'])
+        '-e', '--extension', type=str, choices=['.jpg', '.jpeg', '.png'])
 
     # DIMENSION FEATURE
     dimension_parser = feature_subparsers.add_parser(
@@ -69,9 +69,9 @@ def argument_parser():
     # WATERMARK FEATURE
     watermark_parser = feature_subparsers.add_parser(
         'watermark', parents=[parent_parser])
-    watermark_parser.add_argument('--position', type=str, nargs='?', default='bottom_right',
+    watermark_parser.add_argument('-p', '--position', type=str, nargs='?', default='bottom_right',
                                   const='bottom_right', choices=['top_left', 'top_right', 'bottom_left', 'bottom_right'])
-    watermark_parser.add_argument('--size', type=str, nargs='?', default='medium',
+    watermark_parser.add_argument('-s', '--size', type=str, nargs='?', default='medium',
                                   const='medium', choices=['small', 'medium', 'large'])
 
     args = main_parser.parse_args()
