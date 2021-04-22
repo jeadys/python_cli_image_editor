@@ -1,6 +1,9 @@
-from PIL import Image, ImageFilter
 from pathlib import Path
-import concurrent.futures
+from PIL import Image, ImageFilter
+from concurrent.futures import ProcessPoolExecutor
+
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -19,5 +22,9 @@ class Filter:
             radius=self.f_blur)).save(final_output, optimize=self.optimize, compress_level=9, quality=85)
 
     def filter_processor(self):
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with ProcessPoolExecutor() as executor:
             executor.map(self.process_filter, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Filter)

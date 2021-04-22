@@ -1,6 +1,9 @@
 from PIL import Image
 from pathlib import Path
-import concurrent.futures
+from concurrent.futures import ProcessPoolExecutor
+
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -33,5 +36,9 @@ class Dimension:
                         compress_level=9, quality=85)
 
     def dimension_processor(self):
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with ProcessPoolExecutor() as executor:
             executor.map(self.process_dimension, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Dimension)

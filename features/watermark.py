@@ -1,6 +1,9 @@
-from PIL import Image, ImageFont
 from pathlib import Path
-import concurrent.futures
+from PIL import Image, ImageFont
+from concurrent.futures import ProcessPoolExecutor
+
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -9,8 +12,10 @@ class Watermark:
         self.files = files
         self.f_output = f_output
         self.f_position = f_position
+        self.v_position, self.h_position = self.f_position.split('_')
         self.f_size = f_size
         self.optimize = optimize
+        self.resize = {'small': 8, 'medium': 5, 'large': 3, }
 
     def process_watermark(self, file):
         img = Image.open(file)
@@ -18,15 +23,9 @@ class Watermark:
 
         watermark = Image.open('assets/watermark.png')
 
-        sizes = {
-            'small': 8,
-            'medium': 5,
-            'large': 3,
-        }
-
         # To make the watermark fit nicely in the image we scale it down.
         resized_watermark = watermark.thumbnail(
-            (width_image / sizes[self.f_size], width_image / sizes[self.f_size]), Image.ANTIALIAS)
+            (width_image / self.resize[self.f_size], width_image / self.resize[self.f_size]), Image.ANTIALIAS)
 
         width_watermark, height_watermark = watermark.size
 
@@ -40,7 +39,7 @@ class Watermark:
             'bottom_right': (width_image - width_watermark - padding, height_image - height_watermark - padding),
         }
 
-        new_filename = f'watermarked_{str(file.name)}'
+        new_filename = f'watermarked_{self.v_position}_{self.h_position}_{str(file.name)}'
         final_output = self.f_output.joinpath(new_filename)
 
         img.paste(watermark, positions[self.f_position], watermark)
@@ -48,5 +47,9 @@ class Watermark:
                  compress_level=9, quality=85)
 
     def watermark_processor(self):
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with ProcessPoolExecutor() as executor:
             executor.map(self.process_watermark, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Watermark)
