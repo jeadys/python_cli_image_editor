@@ -9,14 +9,7 @@ from features.hue import Hue
 from features.watermark import Watermark
 
 from helpers.colors import Color
-
-
-def classInfo():
-    method_list = [attribute for attribute in dir(Validate) if callable(
-        getattr(Validate, attribute)) and attribute.startswith('__') is False]
-
-    for method in method_list:
-        print(method)
+from helpers.info import class_info
 
 
 class Validate:
@@ -76,4 +69,4 @@ class Validate:
 
 
 if __name__ == '__main__':
-    classInfo()
+    class_info(Validate)

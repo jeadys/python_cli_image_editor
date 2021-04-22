@@ -2,6 +2,8 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 from concurrent.futures import ProcessPoolExecutor
 
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -31,3 +33,7 @@ class Hue:
     def hue_processor(self):
         with ProcessPoolExecutor() as executor:
             executor.map(self.process_hue, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Hue)

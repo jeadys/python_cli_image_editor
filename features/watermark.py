@@ -2,6 +2,8 @@ from pathlib import Path
 from PIL import Image, ImageFont
 from concurrent.futures import ProcessPoolExecutor
 
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -47,3 +49,7 @@ class Watermark:
     def watermark_processor(self):
         with ProcessPoolExecutor() as executor:
             executor.map(self.process_watermark, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Watermark)

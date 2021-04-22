@@ -2,6 +2,8 @@ from pathlib import Path
 from PIL import Image, ImageFilter
 from concurrent.futures import ProcessPoolExecutor
 
+from helpers.info import class_info
+
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
@@ -22,3 +24,7 @@ class Filter:
     def filter_processor(self):
         with ProcessPoolExecutor() as executor:
             executor.map(self.process_filter, self.files)
+
+
+if __name__ == '__main__':
+    class_info(Filter)
