@@ -4,6 +4,22 @@ from concurrent.futures import ProcessPoolExecutor
 
 from helpers.info import class_info
 
+"""
+The dimension functionality allows the end user to change the dimension of the image(s).
+It allows the end user to scale the image(s) by providing the pixels.
+It allows the end user to rotate the image(s) by providing the degree.
+It allows the end user to flip the image(s) by providing the direction (vertical, horizontal).
+
+This can be done in singular and bulk, with the help of multiprocessing technology this feature is sped up by a lot.
+
+*IMPORT*
+To protect against potential DOS attacks caused by “decompression bombs” 
+(i.e. malicious files which decompress into a huge amount of data and are designed to crash or cause disruption by using up a lot of memory), 
+Pillow will issue a DecompressionBombWarning if the image is over a certain limit.
+
+This warning is added to the warning filter, to prevent script from stopping due to too many large images.
+You can remove the warning from the filter, but for now it's fine because it has no malicious use nor are we accepting images from a malicious user.
+"""
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 

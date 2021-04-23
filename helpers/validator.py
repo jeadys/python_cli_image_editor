@@ -11,6 +11,12 @@ from features.watermark import Watermark
 from helpers.colors import Color
 from helpers.info import class_info
 
+"""
+This is the main class that passes all necessary arguments to the features.
+It has some checks before running the feature, such as checking if the input and output is valid.
+Files found in the input are retrieved and passed to the feature to start image manipulation.
+"""
+
 
 class Validate:
     def __init__(self, **value):
@@ -38,14 +44,11 @@ class Validate:
         Path(self.f_output).mkdir(parents=True, exist_ok=True)
 
         if (self.f_input.is_dir() and self.bulk or self.f_input.is_file() and not self.bulk) and self.f_output.is_dir():
-            print(cleandoc(f'''
-            {Color.OKGREEN}valid input/output{Color.ENDC}
-            '''))
             return self.retrieve_files()
-        else:
-            print(cleandoc(f'''
-            {Color.WARNING}invalid input/output{Color.ENDC}
-            '''))
+
+        print(cleandoc(f'''
+        {Color.WARNING}invalid input/output{Color.ENDC}
+        '''))
 
     def retrieve_files(self):
         image_extensions = ['jpg', '.jpg', 'jpeg', '.jpeg', '.png', 'png']

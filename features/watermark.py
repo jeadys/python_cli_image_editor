@@ -4,6 +4,23 @@ from concurrent.futures import ProcessPoolExecutor
 
 from helpers.info import class_info
 
+"""
+The watermark functionality allows the end user to add a watermark to their image(s).
+This is done by using the watermark found in the assets folder, this can be replaced.
+The image and watermark will be merged together and the watermark will be placed on top of the image.
+
+This can be done in singular and bulk, with the help of multiprocessing technology this feature is sped up by a lot.
+
+Some extra attributes can be passed such as measure and position of the watermark, see README.md for further details.
+
+*IMPORT*
+To protect against potential DOS attacks caused by “decompression bombs” 
+(i.e. malicious files which decompress into a huge amount of data and are designed to crash or cause disruption by using up a lot of memory), 
+Pillow will issue a DecompressionBombWarning if the image is over a certain limit.
+
+This warning is added to the warning filter, to prevent script from stopping due to too many large images.
+You can remove the warning from the filter, but for now it's fine because it has no malicious use nor are we accepting images from a malicious user.
+"""
 Image.warnings.simplefilter('error', Image.DecompressionBombWarning)
 
 
