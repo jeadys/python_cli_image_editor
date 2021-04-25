@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageFilter
 from concurrent.futures import ProcessPoolExecutor
 
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 The filter functionality allows the end user to add filtering to the image(s)
@@ -41,4 +41,4 @@ class Filter:
 
 
 if __name__ == '__main__':
-    class_info(Filter)
+    pass

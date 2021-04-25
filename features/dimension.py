@@ -2,7 +2,7 @@ from PIL import Image
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor
 
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 The dimension functionality allows the end user to change the dimension of the image(s).
@@ -57,4 +57,4 @@ class Dimension:
 
 
 if __name__ == '__main__':
-    class_info(Dimension)
+    pass

@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageFont
 from concurrent.futures import ProcessPoolExecutor
 
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 The watermark functionality allows the end user to add a watermark to their image(s).
@@ -69,4 +69,4 @@ class Watermark:
 
 
 if __name__ == '__main__':
-    class_info(Watermark)
+    pass

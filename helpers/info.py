@@ -11,10 +11,8 @@ def class_info(my_class):
     method_list = [attribute for attribute in dir(my_class) if callable(
         getattr(my_class, attribute)) and attribute.startswith('__') is False]
 
-    for method in method_list:
-        print(method)
+    help_command = f'python editor.py {my_class.__name__.lower()} -h, fore more info'
 
-    help_command = f'python editor.py {my_class.lower()} -h, fore more info'
     description = {
         'Convert':
         '''
@@ -46,4 +44,9 @@ def class_info(my_class):
         ''',
     }
 
-    print(cleandoc(description[my_class]))
+    print(cleandoc(description[my_class.__name__]))
+
+    for method in method_list:
+        print(method)
+
+    return my_class
