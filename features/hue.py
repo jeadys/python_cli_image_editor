@@ -2,7 +2,7 @@ from pathlib import Path
 from PIL import Image, ImageEnhance
 from concurrent.futures import ProcessPoolExecutor
 
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 The hue functionality allows the end user to change the coloring of the image(s).
@@ -51,4 +51,4 @@ class Hue:
 
 
 if __name__ == '__main__':
-    class_info(Hue)
+    pass

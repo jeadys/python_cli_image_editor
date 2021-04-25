@@ -2,7 +2,7 @@ from PIL import Image
 from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor
 
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 The convert functionality allows the end user to change the file format of the image(s).
@@ -42,4 +42,4 @@ class Convert:
 
 
 if __name__ == '__main__':
-    class_info(Convert)
+    pass

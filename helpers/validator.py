@@ -9,7 +9,7 @@ from features.hue import Hue
 from features.watermark import Watermark
 
 from helpers.colors import Color
-from helpers.info import class_info
+#from helpers.info import class_info
 
 """
 This is the main class that passes all necessary arguments to the features.
@@ -72,4 +72,4 @@ class Validate:
 
 
 if __name__ == '__main__':
-    class_info(Validate)
+    pass
